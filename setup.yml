@@ -15,7 +15,7 @@
       
   - name: update hosts file
     lineinfile:
-      path: /etc/hosts
+      dest: /etc/hosts
       line:  "{{ hostvars[item]['ansible_default_ipv4']['address'] }} {{ item }}"
       insertafter: EOF
     with_items:
