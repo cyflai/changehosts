@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: hosts
   tasks:
   
   - hostname:
@@ -12,3 +12,12 @@
       line: "127.0.1.1 {{ inventory_hostname }}.{{ domain }} {{ inventory_hostname }}"
       insertafter: '^.*127.0.0.1.*'
       state: present
+      
+  - name: update hosts file
+    lineinfile:
+      path: /etc/hosts
+      line:  "{{ hostvars[item]['ansible_default_ipv4']['address'] }} {{ item }}"
+      insertafter: EOF
+    with_items:
+         - "{{ groups['hosts'] }}"
+    when: item != ansible_hostname
