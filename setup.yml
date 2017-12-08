@@ -20,4 +20,4 @@
       insertafter: EOF
     with_items:
          - "{{ groups['hosts'] }}"
-    when: item != ansible_hostname
+    when: item != inventory_hostname
